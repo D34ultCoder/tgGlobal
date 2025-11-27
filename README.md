@@ -2,7 +2,7 @@
 
 A React Native mobile application for patient management, an assessment test for Tactology Global, built with Expo and integrated with a NestJS backend.
 
-## 🚀 How to Run the Project
+##  How to Run the Project
 
 ### Prerequisites
 - Node.js (v18 or higher)
@@ -28,7 +28,7 @@ A React Native mobile application for patient management, an assessment test for
 
 ---
 
-## 📚 Libraries Used
+##  Libraries Used
 
 -   **Framework**: `Expo` (SDK 54) & `React Native` - For cross-platform mobile development.
 -   **Routing**: `Expo Router` - File-based routing system (similar to Next.js).
@@ -40,7 +40,7 @@ A React Native mobile application for patient management, an assessment test for
 
 ---
 
-## 🏗️ Architectural Decisions
+##  Architectural Decisions
 
 1.  **Expo Router (File-Based Routing)**:
     -   The app uses the `app/` directory for routing.
@@ -60,11 +60,11 @@ A React Native mobile application for patient management, an assessment test for
 
 ---
 
-## 💡 Implementation Details
+## Implementation Details
 
 -   **Backend Integration**:
     -   The app connects to a local NestJS backend.
-    -   **Android Emulator Support**: The `base.service.ts` automatically detects the platform and switches the API URL to `http://10.0.2.2:3000` for Android emulators (which maps to `localhost` on the host machine) and `http://localhost:3000` for iOS/Web.
+    -   **Android Emulator Support**: The `base.service.ts` automatically detects the platform and switches the API URL to `http://10.0.2.2:8080` for Android emulators (which maps to `localhost` on the host machine) and `http://localhost:8080` for iOS/Web.
 
 -   **Safe Area Handling**:
     -   The app uses `react-native-safe-area-context` to ensure content renders correctly on devices with notches and dynamic islands.
