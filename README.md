@@ -1,50 +1,77 @@
-# Welcome to your Expo app 👋
+# MindStir Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application for patient management, an assessment test for Tactology Global, built with Expo and integrated with a NestJS backend.
 
-## Get started
+## 🚀 How to Run the Project
 
-1. Install dependencies
+### Prerequisites
+- Node.js (v18 or higher)
+- npm
+- Expo Go app on your physical device OR Android Studio Emulator / iOS Simulator
 
-   ```bash
-   npm install
-   ```
+### Quick Start
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-2. Start the app
+2.  **Start the Development Server**
+    ```bash
+    npx expo start -c
+    ```
+    The `-c` flag clears the cache, which is recommended after dependency updates.
 
-   ```bash
-   npx expo start
-   ```
+3.  **Run on Device/Emulator**
+    -   **Physical Device**: Scan the QR code with the Expo Go app (Android) or Camera app (iOS).
+    -   **Android Emulator**: Press `a` in the terminal.
+    -   **iOS Simulator**: Press `i` in the terminal (macOS only).
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📚 Libraries Used
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+-   **Framework**: `Expo` (SDK 54) & `React Native` - For cross-platform mobile development.
+-   **Routing**: `Expo Router` - File-based routing system (similar to Next.js).
+-   **State Management**: `Redux Toolkit` & `React Redux` - For global state management.
+-   **Data Fetching**: `RTK Query` - For efficient data fetching and caching.
+-   **Styling**: `NativeWind` (Tailwind CSS) - For utility-first styling.
+-   **UI Components**: `@expo/vector-icons` - For icons.
+-   **Persistence**: `redux-persist` & `@react-native-async-storage/async-storage` - To persist state across app restarts.
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🏗️ Architectural Decisions
 
-```bash
-npm run reset-project
-```
+1.  **Expo Router (File-Based Routing)**:
+    -   The app uses the `app/` directory for routing.
+    -   `(tabs)` folder organizes the main tab-based navigation.
+    -   `_layout.tsx` files define the navigation structure (Stacks, Tabs) and wrap screens with providers (Redux, Theme).
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2.  **Redux Toolkit & RTK Query**:
+    -   **Why?** To manage global state (like authentication in the future) and handle API interactions efficiently with caching, polling, and optimistic updates.
+    -   **Structure**:
+        -   `store/services/`: Contains API definitions (`patient.service.ts`, `consultation-note.service.ts`).
+        -   `store/slices/`: Contains local state slices.
+        -   `store/index.ts`: Configures the store and persistence.
 
-## Learn more
+3.  **Component-Based Design**:
+    -   Reusable UI components are located in `components/` (e.g., `PatientCard`, `ConsultationNotesModal`).
+    -   Atomic UI elements (buttons, inputs) are in `components/ui/`.
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 💡 Implementation Details
 
-## Join the community
+-   **Backend Integration**:
+    -   The app connects to a local NestJS backend.
+    -   **Android Emulator Support**: The `base.service.ts` automatically detects the platform and switches the API URL to `http://10.0.2.2:3000` for Android emulators (which maps to `localhost` on the host machine) and `http://localhost:3000` for iOS/Web.
 
-Join our community of developers creating universal apps.
+-   **Safe Area Handling**:
+    -   The app uses `react-native-safe-area-context` to ensure content renders correctly on devices with notches and dynamic islands.
+    -   Tab bar styles are configured to respect system insets automatically.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+-   **Optimistic UI & Caching**:
+    -   RTK Query tags (`Patients`) are used to automatically invalidate and refetch data when mutations (create/update/delete) occur, ensuring the UI is always in sync with the server.
+
+-   **Custom Animations**:
+    -   `LayoutAnimation` is used in `PatientCard` for smooth expansion/collapse effects.
